@@ -1,0 +1,54 @@
+import allure
+import pytest
+from api.user_client import UserClient
+from helpers.user_mazafaka import build_new_user_payload
+from data.payload import USER_MISSING_FIELD_CASES
+
+@allure.epic("Stellar Burgers API")
+@allure.feature("Создание пользователя")
+class TestUserCreate:
+    @allure.title("Можно создать уникального пользователя: 200 и success=true")
+    def test_register_unique_user_success(self, base_url, cleanup_users):
+        client = UserClient(base_url)
+        payload = build_new_user_payload()
+        resp = client.register(payload)
+        assert resp.status_code == 200
+        body = resp.json()
+        assert body.get("success") is True
+        assert "accessToken" in body
+        assert "refreshToken" in body
+        assert body["user"]["email"] == payload["email"]
+        assert body["user"]["name"] == payload["name"]
+        cleanup_users(access_token=body.get("accessToken"))
+
+    @allure.title("Нельзя создать пользователя, который уже зарегистрирован")
+    def test_register_existing_user_returns_error(self, base_url, registered_user):
+        client = UserClient(base_url)
+        resp = client.register(registered_user)
+        assert resp.status_code == 403
+        body = resp.json()
+        assert body.get("success") is False
+        assert body.get("message") == "User already exists"
+
+    @allure.title("Нельзя создать пользователя без обязательного поля")
+    @pytest.mark.parametrize("missing_field, bad_payload", USER_MISSING_FIELD_CASES)
+    def test_register_missing_required_field_returns_error(
+        self,
+        base_url,
+        missing_field,
+        bad_payload,
+        cleanup_users,
+    ):
+        client = UserClient(base_url)
+        payload = build_new_user_payload()
+        payload.update(bad_payload)
+        payload.pop(missing_field, None)
+        cleanup_users(
+            email=payload.get("email"),
+            password=payload.get("password"),
+        )
+        resp = client.register(payload)
+        assert resp.status_code == 403
+        body = resp.json()
+        assert body.get("success") is False
+        assert body.get("message") == "Email, password and name are required fields"
