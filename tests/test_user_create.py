@@ -2,7 +2,7 @@ import allure
 import pytest
 from api.user_client import UserClient
 from helpers.user_mazafaka import build_new_user_payload
-from data.payload import USER_MISSING_FIELD_CASES
+from data.payload import MISSING_FIELD_CASES
 
 @allure.epic("Stellar Burgers API")
 @allure.feature("Создание пользователя")
@@ -31,7 +31,7 @@ class TestUserCreate:
         assert body.get("message") == "User already exists"
 
     @allure.title("Нельзя создать пользователя без обязательного поля")
-    @pytest.mark.parametrize("missing_field, bad_payload", USER_MISSING_FIELD_CASES)
+    @pytest.mark.parametrize("missing_field, bad_payload", MISSING_FIELD_CASES)
     def test_register_missing_required_field_returns_error(
         self,
         base_url,
