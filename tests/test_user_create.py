@@ -1,7 +1,7 @@
 import allure
 import pytest
 from api.user_client import UserClient
-from helpers.user_mazafaka import build_new_user_payload
+from helpers.user_gen import build_new_user_payload
 from data.payload import MISSING_FIELD_CASES
 
 @allure.epic("Stellar Burgers API")

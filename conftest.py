@@ -2,7 +2,7 @@ import pytest
 from data.constants import BASE_URL
 from api.user_client import UserClient
 from api.ing_client import IngredientsClient
-from helpers.user_mazafaka import build_new_user_payload
+from helpers.user_gen import build_new_user_payload
 
 @pytest.fixture
 def base_url() -> str:
