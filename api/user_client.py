@@ -2,7 +2,7 @@ from __future__ import annotations
 import allure
 from api.base_client import BaseClient
 from api.endpoints import AUTH_REGISTER, AUTH_LOGIN, AUTH_USER
-
+# клиент для работы с API пользователей
 class UserClient(BaseClient):
     @allure.step("Зарегистрировать пользователя")
     def register(self, payload: dict):

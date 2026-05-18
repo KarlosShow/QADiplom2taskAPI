@@ -1,11 +1,11 @@
 VALID_TEMPLATE = {
-    "email": "velanishkis@yandex.ru",
-    "password": "MQc7FDKt",
+    "email": "velan@yandex.ru",
+    "password": "MQc7FDK",
     "name": "Karlos",
 }
 
 MISSING_FIELD_CASES = [
-    ("email", {"password": "MQc7FDKt", "name": "User1"}),
-    ("password", {"email": "velanishkis@yandex.ru", "name": "Iser1"}),
-    ("name", {"email": "velanishkis@yandex.ru", "password": "MQc7FDKt"}),
+    ("email", {"password": "Pass1", "name": "User1"}),
+    ("password", {"email": "test1@yandex.ru", "name": "User1"}),
+    ("name", {"email": "test1@yandex.ru", "password": "Pass1"}),
 ]
