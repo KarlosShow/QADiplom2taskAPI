@@ -1,0 +1,6 @@
+INGREDIENTS = "/api/ingredients"
+AUTH_REGISTER = "/api/auth/register"
+AUTH_LOGIN = "/api/auth/login"
+AUTH_USER = "/api/auth/user"
+ORDERS = "/api/orders"
+ORDERS_ALL = "/api/orders/all"
